@@ -157,3 +157,29 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+// Submit form data to Formspree using fetch
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  fetch(form.action, {
+    method: "POST",
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("✅ Message sent successfully!");
+      form.reset();
+      formBtn.setAttribute("disabled", ""); // disable button after reset
+    } else {
+      alert("❌ Something went wrong. Please try again.");
+    }
+  })
+  .catch(() => {
+    alert("⚠️ Network error. Please check your internet connection.");
+  });
+});
